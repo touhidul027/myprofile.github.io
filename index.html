@@ -1,60 +1,1045 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <title>touhidul027 technical profile</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #2c3e50; /* Darker blue for headings */
+            --secondary-blue: #3498db; /* Lighter blue for accents */
+            --light-gray: #ecf0f1; /* Light background */
+            --medium-gray: #bdc3c7; /* Border/shadow color */
+            --dark-text: #34495e; /* Main text color */
+            --label-color: #7f8c8d; /* Label text color */
+            --white: #ffffff;
+            --modal-bg: rgba(0, 0, 0, 0.6); /* Overlay background */
+        }
 
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--light-gray);
+            margin: 0;
+            padding: 40px 20px;
+            color: var(--dark-text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px; /* Adjusted max-width for a single column layout */
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-blue);
+            font-size: 3em;
+            margin-bottom: 50px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        h1::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary-blue);
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            text-align: center;
+            margin-bottom: 40px;
+            background-color: var(--white);
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .nav-link {
+            padding: 10px 20px;
+            text-decoration: none;
+            color: var(--primary-blue);
+            font-weight: 700;
+            font-size: 1.1em;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .nav-link:hover {
+            background-color: var(--secondary-blue);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            background-color: var(--secondary-blue);
+            color: var(--white);
+            border-color: var(--primary-blue);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none; /* Hidden by default */
+        }
+
+        .content-section.active {
+            display: block; /* Shown when active */
+        }
+
+        /* Lists for different sections */
+        .projects-list,
+        .education-list,
+        .knowledge-base-list,
+        .personal-list,
+        .achievements-list { /* Added achievements-list */
+            display: flex;
+            flex-direction: column; /* Stack items vertically */
+            gap: 30px; /* Space between stacked items */
+        }
+
+        .item-card { /* General class for clickable cards */
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .item-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .item-card h2 {
+            margin-top: 0;
+            color: var(--secondary-blue);
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--light-gray);
+            padding-bottom: 10px;
+        }
+
+        .label {
+            font-weight: 700;
+            color: var(--label-color);
+            margin-right: 8px;
+            font-size: 0.95em;
+        }
+
+        .info {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            font-size: 0.95em;
+        }
+
+        .info span:first-child {
+            min-width: 120px; /* Aligns labels */
+            flex-shrink: 0;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--modal-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            max-width: 700px;
+            width: 90%;
+            max-height: 80vh; /* Limit height to prevent overflow */
+            overflow-y: auto; /* Enable scrolling for long content */
+            position: relative;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .modal-close-button {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.8em;
+            cursor: pointer;
+            color: var(--label-color);
+            transition: color 0.2s ease;
+        }
+
+        .modal-close-button:hover {
+            color: var(--primary-blue);
+        }
+
+        .modal-title {
+            color: var(--primary-blue);
+            font-size: 2.2em;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--light-gray);
+            padding-bottom: 10px;
+        }
+
+        .modal-info .label {
+            color: var(--secondary-blue);
+            font-size: 1em;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        .modal-info {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+                margin-bottom: 30px;
+            }
+
+            .navbar {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .nav-link {
+                padding: 8px 15px;
+                font-size: 1em;
+            }
+
+            .item-card {
+                padding: 25px;
+            }
+
+            .item-card h2 {
+                font-size: 1.5em;
+            }
+
+            .info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .info span:first-child {
+                min-width: auto;
+                margin-bottom: 5px;
+            }
+
+            .modal-content {
+                padding: 25px;
+            }
+
+            .modal-title {
+                font-size: 1.8em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 20px 10px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .modal-content {
+                padding: 20px;
+            }
+            .modal-close-button {
+                top: 10px;
+                right: 15px;
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
 <body>
 
-  <div class="container">
-    <div>
-      <ul class="list-group">
-        <li class="list-group-item">NAME: <b> Md. Touhidul Islam </b> </li>
-        <li class="list-group-item">EMAIL: <b>itouhidul027@gmail.com </b> </li>
-        <li class="list-group-item">EXPERIENCE: <b>3 Years 9 Months</b></li>
-      </ul>
+<div class="contact-sidebar" id="contactSidebar" style="
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 250px;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 999;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+">
+    <div class="item-card" data-section-type="personal" data-item-id="contactDetails">
+        <h2 style="margin-top: 0; font-size: 18px; color: #2c3e50;">Md. Touhidul Islam</h2>
+        <div class="info"><span class="label" style="font-weight: bold;">01985238731</div>
+        <div class="info"><span class="label" style="font-weight: bold;">itouhidul027@gmail.com</div>
+    </div>
+</div>
+
+    <div class="container">
+        <nav class="navbar">
+            <a href="#" class="nav-link active" data-section="projects">My Projects</a>
+            <a href="#" class="nav-link" data-section="education">Education</a>
+            <a href="#" class="nav-link" data-section="knowledge-base">Knowledge Base History</a>
+            <a href="#" class="nav-link" data-section="achievements">Q&A</a> <a href="#" class="nav-link" data-section="personal">Others</a>
+        </nav>
+
+        <div id="projects-section" class="content-section active">
+            <div class="projects-list" id="projectsList">
+                <div class="item-card" data-section-type="projects" data-item-id="abDirectRevamp">
+                    <h2>AB Direct Revamp</h2>
+                    <div class="info"><span class="label">Duration:</span> June 01, 2024 - Present</div>
+                    <div class="info"><span class="label">Technology:</span> Event driven architecture, Spring Boot (Java), Apache Kafka, Git, Maven, MsSQL, Microservice, Jenkins, Grafana-Loki, SOAP</div>
+                    <div class="info"><span class="label">Responsibility:</span> As a Team Lead, All aspects of AB Direct Revamp App to delivery.</div>
+                </div>
+
+                <div class="item-card" data-section-type="projects" data-item-id="ulkaDigitalWallet">
+                    <h2>ULKA Digital Wallet</h2>
+                    <div class="info"><span class="label">Duration:</span> December 01, 2023 – May 30, 2024</div>
+                    <div class="info"><span class="label">Technology:</span> Event driven architecture, Spring Boot (Java), Apache Kafka, Git, Maven, PostgreSQL, Microservice, Debezium</div>
+                    <div class="info"><span class="label">Responsibility:</span> As Senior Software Engineer help development of new features such as Request/Send/Split Money, Charge Fee, Notification system.</div>
+                </div>
+
+                <div class="item-card" data-section-type="projects" data-item-id="abgWallet">
+                    <h2>ABG Wallet</h2>
+                    <div class="info"><span class="label">Duration:</span> March 16, 2023 - December 01, 2023</div>
+                    <div class="info"><span class="label">Technology:</span> Spring Boot (Java), Git, Maven, PostgreSQL, Microservice</div>
+                    <div class="info"><span class="label">Responsibility:</span> Development of features like Bill Payment, Add money from card etc.</div>
+                </div>
+
+                <div class="item-card" data-section-type="projects" data-item-id="digitalWalletChat">
+                    <h2>Digital Wallet Chat</h2>
+                    <div class="info"><span class="label">Duration:</span> March 16, 2023 – April 31, 2023</div>
+                    <div class="info"><span class="label">Technology:</span> GO, Git, ReactJS, MongoDB, Open Source (Tinode)</div>
+                    <div class="info"><span class="label">Responsibility:</span> Full development and support.</div>
+                </div>
+
+                <div class="item-card" data-section-type="projects" data-item-id="bataBdEcomCdc">
+                    <h2>BataBD Ecom CDC</h2>
+                    <div class="info"><span class="label">Duration:</span> November 2022 – March 15, 2023</div>
+                    <div class="info"><span class="label">Technology:</span> Java, JavaScript, JSP, Struts-2, Spring Boot, Git, Maven, Oracle Database</div>
+                    <div class="info"><span class="label">Responsibility:</span>SKU management, Product creation, Stock sync and others Feature development for Shoe Order Management.</div>
+                </div>
+
+                <div class="item-card" data-section-type="projects" data-item-id="abblInternetBanking">
+                    <h2>ABBL Internet Banking</h2>
+                    <div class="info"><span class="label">Duration:</span> September 2022 - October 2022</div>
+                    <div class="info"><span class="label">Technology:</span> Java, JavaScript, JSP, Thymleaf, Spring Boot (REST Service), Spring MVC, Git, Maven, PostgreSQL, Hibernate, Jasper Report</div>
+                    <div class="info"><span class="label">Responsibility:</span> Improved ABBL eKYC registration process, Enhanced cutomer Report </div>
+                </div>
+
+                <div class="item-card" data-section-type="projects" data-item-id="ucblInternetBanking">
+                    <h2>UCBL Internet Banking</h2>
+                    <div class="info"><span class="label">Duration:</span> July 2022 - August 2022</div>
+                    <div class="info"><span class="label">Technology:</span> Java, JavaScript, JSP, Thymleaf, Spring Boot (REST Service), Spring MVC, Git, Maven, PostgreSQL, Hibernate</div>
+                    <div class="info"><span class="label">Responsibility:</span> Requirement and design different features, feature development for dynamic Push Notification.</div>
+                </div>
+
+                <div class="item-card" data-section-type="projects" data-item-id="enoviaTitleTranslation">
+                    <h2>Enovia Title and Translation Management</h2>
+                    <div class="info"><span class="label">Duration:</span> January 2019 - April 2022</div>
+                    <div class="info"><span class="label">Technology:</span> Java, JavaScript, UWA, Matrix Query Language, JAX-RS, Jira-Bitbucket</div>
+                    <div class="info"><span class="label">Responsibility:</span> Was a Team lead, Doing Full lifecycle support like requirements analysis, development, deployment, and support.</div>
+                </div>
+
+                <div class="item-card" data-section-type="projects" data-item-id="cloudViewDashboard">
+                    <h2>Cloud View Dashboard Development</h2>
+                    <div class="info"><span class="label">Duration:</span> November 2021 - April 2022</div>
+                    <div class="info"><span class="label">Technology:</span> DS Cloud View Framework, Java, JavaScript, Rest Service, Git-Gerrit</div>
+                    <div class="info"><span class="label">Responsibility:</span> Requirements analysis and development. Lead the team and 
+                    doing client presentation</div>
+                </div>
+
+                <div class="item-card" data-section-type="projects" data-item-id="enoviaWebserviceClient">
+                    <h2>Enovia Webservice Client</h2>
+                    <div class="info"><span class="label">Duration:</span> January 2021 - April 2022</div>
+                    <div class="info"><span class="label">Technology:</span> Spring MVC</div>
+                    <div class="info"><span class="label">Responsibility:</span> Development of respective project feature. Also managing the project lifecycle</div>
+                </div>
+
+                <div class="item-card" data-section-type="projects" data-item-id="enoviaRestService">
+                    <h2>Enovia Rest Service (PDM-Enovia Migration)</h2>
+                    <div class="info"><span class="label">Duration:</span> November 2021 - April 2022</div>
+                    <div class="info"><span class="label">Technology:</span> Spring Boot, Matrix Query Language</div>
+                    <div class="info"><span class="label">Responsibility:</span> Assisted main developer in feature development and performance optimization. Converting report generation feature from spring boot to enovia framework supported version.</div>
+                </div>
+
+                <div class="item-card" data-section-type="projects" data-item-id="atonIntegrations">
+                    <h2>Aton Integrations</h2>
+                    <div class="info"><span class="label">Duration:</span> January 2022 - April 2022</div>
+                    <div class="info"><span class="label">Technology:</span> Spring Boot, UWA, JavaScript</div>
+                    <div class="info"><span class="label">Responsibility:</span> Main Developer — requirements analysis and implemented client requirements using Java and Matrix Query Language.</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="education-section" class="content-section">
+            <div class="education-list" id="educationList">
+                <div class="item-card" data-section-type="education" data-item-id="bachelorDegree">
+                    <h2>Bachelor of Science</h2>
+                    <div class="info"><span class="label">Institution:</span> International University Of Business Agriculture and Technology (IUBAT)</div>
+                    <div class="info"><span class="label">Department:</span> Computer Science and Engineering</div>
+                    <div class="info"><span class="label">Duration:</span> 2015 – 2018</div>
+                    <div class="info"><span class="label">Result:</span> CGPA: 3.75 out of 4.00</div>
+                </div>
+                <div class="item-card" data-section-type="education" data-item-id="hsc">
+                    <h2>Higher Secondary Certificate (HSC)</h2>
+                    <div class="info"><span class="label">Institution:</span> Shahid Bulbul Government College</div>
+                    <div class="info"><span class="label">Passing Year:</span> 2014</div>
+                    <div class="info"><span class="label">Result:</span> GPA: 5.00 out of 5.00</div>
+                </div>
+                <div class="item-card" data-section-type="education" data-item-id="ssc">
+                    <h2>Secondary School Certificate (SSC)</h2>
+                    <div class="info"><span class="label">Institution:</span> Bilsolongi Alokdiar High School</div>
+                    <div class="info"><span class="label">Passing Year:</span> 2011</div>
+                    <div class="info"><span class="label">Result:</span> GPA: 5.00 out of 5.00 (Golden A+)</div>
+                </div>
+                <div class="item-card" data-section-type="education" data-item-id="classSixToTen">
+                    <h2>Secondary Education (Class VI - X)</h2>
+                    <div class="info"><span class="label">Institution:</span> Bilsolongi Alokdiar High School</div>
+                    <div class="info"><span class="label">Duration:</span> 2006 – 2010</div>
+                    <div class="info"><span class="label">Roll:</span> Always Class Roll #1</div>
+                    <div class="info"><span class="label">School First:</span> Third(3) time school champion Out of Four(4)</div>
+                    <div class="info"><span class="label">Scholarship:</span>Class 8 Scholarship, SSC Merit-based scholarship</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="knowledge-base-section" class="content-section">
+            <div class="knowledge-base-list" id="knowledgeBaseList">
+
+                <div class="item-card" data-section-type="knowledge-base" data-item-id="springFramework">
+                    <h2>C Programming Language</h2>
+                    <!-- <div class="info"><span class="label">Area:</span> C Programming Learning</div> -->
+                    <div class="info"><span class="label">History:</span> Learned C programming from various sources, including completing the book "Programming in ANSI C by E. Balagurusamy" . I studied each topic in depth to build a strong foundation. C++ also learned in this way.  Completed while I was university student.</div>
+                </div>
+
+                <div class="item-card" data-section-type="knowledge-base" data-item-id="springFramework">
+                    <h2>Java Programming Language</h2>
+                    <!-- <div class="info"><span class="label">Area:</span> C Programming Learning</div> -->
+                    <div class="info"><span class="label">History:</span> Learned Java programming language from various sources, including completing the book "Head First Java". Completed while I was university student. Varios sources includes many online materials. </div>
+                </div>
+
+                 <div class="item-card" data-section-type="knowledge-base" data-item-id="springFramework">
+                    <h2>SQL</h2>
+                    <!-- <div class="info"><span class="label">Area:</span> C Programming Learning</div> -->
+                    <div class="info"><span class="label">History:</span> Learned SQL from various sources, including completing the book "Head First SQL".  Completed while I was university student.</div>
+                </div>
+
+                <div class="item-card" data-section-type="knowledge-base" data-item-id="databases">
+                    <h2>Design Patterns</h2>
+                    <div class="info"><span class="label">Experience:</span> Learned Design Patterns from various sources, including completing the book "Head First Design Patterns". Completed while I was 7 seven semester student.</div>
+                </div>
+
+                <div class="item-card" data-section-type="knowledge-base" data-item-id="databases">
+                    <h2>Object Oriented Programming</h2>
+                    <div class="info"><span class="label">Experience:</span> Learned OOP from various sources, including completing the book "Head First Object Oriented Analysis annd Design". Completed while I was university student.</div>
+                </div>
+
+                <div class="item-card" data-section-type="knowledge-base" data-item-id="databases">
+                    <h2>JavaScript</h2>
+                    <div class="info"><span class="label">Experience:</span> Learned Vanilla JavaScript from various sources, including completing the book "Head First JavaScript". Completed while I was university student. Also I started my profession in R&D section which extensively use Raw JavaScript along with framework UWA, RequireJS.</div>
+                </div>
+
+                <div class="item-card" data-section-type="knowledge-base" data-item-id="databases">
+                    <h2>HTML5</h2>
+                    <div class="info"><span class="label">Experience:</span> Learned HTML5 from various sources, including completing the book "Head First HTML5". Completed while I was university student.</div>
+                </div>
+
+                <div class="item-card" data-section-type="knowledge-base" data-item-id="databases">
+                    <h2>Servlet JSP</h2>
+                    <div class="info"><span class="label">Experience:</span> Learned Servlet JSP from various sources, including completing the book "Head First Servlet and JSP". Completed while I was university student.</div>
+                </div>
+
+                <div class="item-card" data-section-type="knowledge-base" data-item-id="databases">
+                    <h2>Data Structures and algorithms</h2>
+                    <div class="info"><span class="label">Experience:</span> While I was student I participated various orgranized programming contest. I solved around 71 programming questions in UVA Online judge. Completed the book "Data Structures and Algorithms in Java", gives me more solid foundation in problem solving. After completed this books
+                    I solved 148 leetcode problems. After that I also completed "Introduction to Algorithms", the bible book. You read it right. But point to be noted that I am not competitive programmer despite of having extra miles.</div>
+                </div>
+
+                <div class="item-card" data-section-type="knowledge-base" data-item-id="databases">
+                    <h2>Spring Framework</h2>
+                    <div class="info"><span class="label">Experience:</span> Learned Spring Security from various sources, including completing the book "Spring Security 3.1" by Robert Winch. For Spring MVC, completed the book "Springs in Practice" and "Spring MVC: designing Real World Web applications". Thus give very solid foundation in spring framework.</div>
+                </div>
+
+                <div class="item-card" data-section-type="knowledge-base" data-item-id="databases">
+                    <h2>React JS</h2>
+                    <div class="info"><span class="label">Experience:</span> Learned React JS from various sources, including completing the book "The Road to React". This book Enhanced my Vanilla JavaScript knowledge too</div>
+                </div>
+
+                <div class="item-card" data-section-type="knowledge-base" data-item-id="databases">
+                    <h2>Unreal Engine</h2>
+                    <div class="info"><span class="label">Experience:</span> Learned Unreal Engine Game Development from various sources, including completing the book "Elevating Game Experiences with Unreal Engine 5_ Bring your game ideas to life using the new Unreal Engine 5 and C++, 2nd Edition-Packt Pub". This book covers C++ and Blueprint approach
+                    to build a 3d game. Current book I am practicing - "Hands-On Artificial Intelligence with Unreal Engine". There
+                are more than dozens book are in my future list to be completed.</div>
+                </div>
+
+                <div class="item-card" data-section-type="knowledge-base" data-item-id="databases">
+                    <h2>Others</h2>
+                    <div class="info"><span class="label">Thoughts:</span> I could list many more, but I’ll keep it brief. What I can confidently say is that I genuinely enjoy reading books.  
+    In today’s world, with AI tools available, my learning approach has evolved:  
+    whenever I want to understand something deeply, I download well-known books on the topic and skim through them to get the overall picture before diving into specific areas. </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="achievements-section" class="content-section">
+            <div class="achievements-list" id="achievementsList">
+
+<div class="item-card" data-section-type="achievements" data-item-id="techLearningApproach">
+    <h2>Why this Q&A?</h2>
+    <div class="item-description-text" style="line-height: 1.6; font-size: 0.95em;">
+        I am very weak at convincing people with speaking, including teachnical interview. So I decided this part so that people can understand exactly who I am. You can go through <b> Knowledge Base History</b> Section to gain some insights of me.
+    </div>
+</div>
+
+                <div class="item-card" data-section-type="achievements" data-item-id="codeathonWinner_nope">
+                    <h2>Do we need to know some of your weakness?</h2>
+                    <div class="info">
+                        <ul style="padding-left: 20px; line-height: 1.8;">
+                            <li>I often hesitate to push team members to work late hours, even when project deadlines are tight.</li>
+                            <li>This comes from a desire to maintain a healthy team atmosphere and respect personal boundaries.</li>
+                            <li>Just to share — I tend to be a bit soft-hearted when it comes to handling people.</li>
+                        </ul>
+                    </div>
+                </div>
+
+<div class="item-card" data-section-type="achievements" data-item-id="codeathonWinner_nope">
+    <h2>What Drives My Positive Energy?</h2>
+    <div class="info">
+        <ul style="padding-left: 20px; line-height: 1.8;">
+            <li>I’m a highly consistent and dependable person.</li>
+            <li>I believe in hard work and staying focused under pressure.</li>
+            <li>I genuinely care about others and maintain empathy in teamwork.</li>
+            <li>I usually make accurate task estimations based on real capacity.</li>
+            <li>I strive to build clean, bug-free features.</li>
+            <li>I always design implementations that are easy to maintain and hand over.</li>
+            <li>I don’t give up easily — persistence is part of my work ethic.</li>
+            <li>I can dive deep into even boring or complex technologies if the project requires it — I adapt and learn fast.</li>
+        </ul>
+    </div>
+</div>
+
+
+
+                <div class="item-card" data-section-type="achievements" data-item-id="techLearningApproach">
+    <h2>How Did I Learn So Many Technologies?</h2>
+    <div class="item-description-text">
+
+        <b> I have very strong foundation knowledge</b>
+        <p>It might seem overwhelming at first glance, but my strength lies in mastering the **fundamentals** of each technology I work with. I build a strong programming foundation by thoroughly studying and completing full books on core languages like C and Java, ensuring a deep understanding through structured learning and consistent practice.</p>
+
+        <p>By my seventh semester in university, I'd already completed comprehensive books like *Head First Design Patterns*, *Head First Object-Oriented Analysis and Design*, and *Head First Servlets and JSP*. I also covered JavaScript, HTML5, and more, giving me a well-rounded understanding across both backend and frontend stacks.</p>
+
+        <p>On top of that, many of my real-world responsibilities involve **research and development**. This R&D-driven workflow has been invaluable, helping me quickly learn and efficiently adopt new technologies as needed for projects.</p>
+
+        <p>Most recently, I've applied this same self-driven approach to mastering **game development**, utilizing Unreal Engine with both C++ and Blueprints to expand my skill set even further.</p>
+    </div>
+</div>
+
+
+<div class="item-card" data-section-type="achievements" data-item-id="techLearningApproach">
+    <h2>How Do You Handle Immense Pressure?</h2>
+    <div class="item-description-text" style="line-height: 1.6; font-size: 0.95em;">
+        <b>Short Answer is Hard work.</b>
+        During high-pressure situations, I dedicate myself fully and work diligently to meet delivery deadlines.  
+        I push my limits when necessary and adapt quickly to changing demands to ensure success.
+
+    </div>
+</div>
+
+
+<div class="item-card" data-section-type="achievements" data-item-id="techLearningApproach">
+    <h2>What’s something people often misunderstand about you?</h2>
+    <div class="item-description-text" style="line-height: 1.6; font-size: 0.95em;">
+        <b>I know many things.</b>
+        Yeah you read it right. It happens with me now and then at the time of task assignment. I asked why assuming instead of directly asking me about it.
+    </div>
+</div>
+
+<div class="item-card" data-section-type="achievements" data-item-id="techLearningApproach">
+    <h2>What’s something people know you are better off?</h2>
+    <div class="item-description-text" style="line-height: 1.6; font-size: 0.95em;">
+        <b>Task assignment and estimations</b>
+As I am data driven, my estimation is nearly perfect at each time. Because I took into account of individuals skill ability.
+I am talking about from <b>Team Lead</b> perspective
+    </div>
+</div>
+
+
+<div class="item-card" data-section-type="achievements" data-item-id="techLearningApproach">
+    <h2>What’s something you want to keep up but should be given up(Sometimes)?</h2>
+    <div class="item-description-text" style="line-height: 1.6; font-size: 0.95em;">
+        <b>empathy and humbleness</b>
+        I am not able to remove this quality because I born with it. In software professionalism sometimes this quality cost me
+        much. But I am okay with it.
+    </div>
+</div>
+
+<div class="item-card" data-section-type="achievements" data-item-id="techLearningApproach">
+    <h2>How do you learn something new?</h2>
+    <div class="item-description-text" style="line-height: 1.6; font-size: 0.95em;">
+        <b>A book and A Tutorial series</b>
+        I would never say I know something untill I finish at least one well known book on it.
+    </div>
+</div>
+
+<div class="item-card" data-section-type="achievements" data-item-id="techLearningApproach">
+    <h2>Are you critical thinker/extraordinary resource?</h2>
+<div class="item-description-text" style="line-height: 1.6; font-size: 0.95em;">
+    <b>Critical Thinking:</b> I would say I’m around 30% there — developing strong critical thinking took time and conscious effort. It’s still a work in progress, but I’m improving steadily.<br><br>
+
+    <b>Extraordinary Talent:</b> I consider myself an ordinary person who competes with extraordinary individuals through solid reasoning, hard work, and dedication. I may not always be the standout lead, but I excel as a reliable and capable right-hand to exceptional talent — a role I’ve successfully fulfilled before.
+</div>
+
+</div>
+
+
+
+            </div>
+        </div>
+
+
+        <div id="personal-section" class="content-section">
+            <div class="personal-list" id="personalList">
+               <div class="item-card" data-section-type="personal" data-item-id="game_dev_hustle_1">
+    <h2>Side Hustle Project</h2>
+    <div class="info"><span class="label">Interest:</span>Unreal Engine Game Development</div>
+    <div class="info"><span class="label">Details:</span> Passionate about immersive game development that reflects real-world systems. </div>
+</div>
+
+
+                <div class="item-card" data-section-type="personal" data-item-id="hobbies">
+                    <h2>Hobbies & Interests</h2>
+                    <div class="info"><span class="label">Interests:</span>Motorcycle Riding</div>
+                    <div class="info"><span class="label">Details:</span> Passionate about motorcycle rides, particularly through new destination.</div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <br>
+    <div class="modal-overlay" id="itemModal">
+        <div class="modal-content">
+            <button class="modal-close-button" id="closeModal">&times;</button>
+            <h2 class="modal-title" id="modalItemTitle"></h2>
+            <div class="modal-info" id="modalItemDetail1"></div>
+            <div class="modal-info" id="modalItemDetail2"></div>
+            <div class="modal-info" id="modalItemDetail3"></div>
+            <p class="modal-info" id="modalItemDescription"></p>
+        </div>
+    </div>
 
-    <p>TimeSpent for Technical Skills.</p>
-    <br>
+    <script>
+        // Consolidated Data Structure for all sections
+        const portfolioData = {
+            projects: {
+                abDirectRevamp_nope: {
+                    title: "AB Direct Revamp",
+                    detail1: "December 01, 2023 - Present",
+                    detail2: "Technology: Spring Boot (Java), Apache Kafka, Git, Maven, PostgreSQL, Microservice, Jenkins, Grafana-Loki, Soap",
+                    detail3: "Responsibility: All aspects of AB Direct Revamp App from conception to delivery.",
+                    description: "This project involved a complete overhaul of the AB Direct application, focusing on modernizing the architecture with microservices and integrating advanced monitoring tools like Grafana-Loki. Key responsibilities included system design, API development, and ensuring seamless deployment pipelines with Jenkins."
+                },
+                ulkaDigitalWallet_nope: {
+                    title: "ULKA Digital Wallet",
+                    detail1: "Duration: December 01, 2023 – May 30, 2024",
+                    detail2: "Technology: Spring Boot (Java), Apache Kafka, Git, Maven, PostgreSQL, Microservice, Debezium",
+                    detail3: "Responsibility: Development of new features such as Send Money, Charge Fee, Notification.",
+                    description: "For the ULKA Digital Wallet, my role was pivotal in expanding its core functionalities. I developed critical features like secure money transfer, automated charge fee calculations, and real-time notification systems. Debezium was integrated for change data capture to ensure data consistency across services."
+                },
+                abgWallet__nope: {
+                    title: "ABG Wallet",
+                    detail1: "Duration: March 16, 2023 - December 01, 2023",
+                    detail2: "Technology: Spring Boot (Java), AKKA, Git, Maven, PostgreSQL, Microservice",
+                    detail3: "Responsibility: Development of features like Bill Payment Wallet.",
+                    description: "In the ABG Wallet project, I focused on implementing the Bill Payment Wallet feature. This included designing the payment flow, integrating with various billing partners, and ensuring a robust and scalable solution using Spring Boot and AKKA for concurrency management."
+                },
+                digitalWalletChat_nope: {
+                    title: "Digital Wallet Chat",
+                    detail1: "Duration: March 16, 2023 – April 31, 2023",
+                    detail2: "Technology: GO, Git, ReactJS, MongoDB, Open Source (Tinode)",
+                    detail3: "Responsibility: Full development and support.",
+                    description: "This project involved building a real-time chat functionality integrated into a digital wallet. I was responsible for the entire development lifecycle, from backend services with GO and MongoDB to the frontend UI with ReactJS, leveraging the Tinode open-source chat platform."
+                },
+                bataBdEcomCdc_nope: {
+                    title: "BataBD Ecom CDC",
+                    detail1: "Duration: November 2022 – March 15, 2023",
+                    detail2: "Technology: Java, JavaScript, JSP, Struts-2, Spring Boot, Git, Maven, Oracle",
+                    detail3: "Responsibility: Feature development for Shoe Order Management.",
+                    description: "My contribution to BataBD Ecom CDC focused on enhancing their shoe order management system. This involved developing new features using a mix of legacy (JSP, Struts-2) and modern (Spring Boot) technologies, optimizing order processing, and improving inventory synchronization."
+                },
+                abblInternetBanking_nope: {
+                    title: "ABBL Internet Banking",
+                    detail1: "Duration: September 2022 - October 2022",
+                    detail2: "Technology: Java, JavaScript, JSP, Thymleaf, Spring Boot (REST Service), Spring MVC, Git, Maven, PostgreSQL, Hibernate",
+                    detail3: "Responsibility: Improved ABBL eKYC registration process.",
+                    description: "For ABBL Internet Banking, I was tasked with streamlining the eKYC (Know Your Customer) registration process. This involved optimizing the user flow, enhancing data validation, and integrating with backend systems to ensure a faster and more reliable onboarding experience for new users."
+                },
+                ucblInternetBanking_nope: {
+                    title: "UCBL Internet Banking",
+                    detail1: "Duration: July 2022 - August 2022",
+                    detail2: "Technology: Java, JavaScript, JSP, Thymleaf, Spring Boot (REST Service), Spring MVC, Git, Maven, PostgreSQL, Hibernate",
+                    detail3: "Responsibility: Requirement and design analysis, feature development (Push Notification).",
+                    description: "In the UCBL Internet Banking project, I conducted detailed requirement and design analysis for new features. A key development was the implementation of a robust push notification system, ensuring users received timely updates and alerts directly on their devices."
+                },
+                enoviaTitleTranslation_nope: {
+                    title: "Enovia Title and Translation Management",
+                    detail1: "Duration: January 2019 - April 2022",
+                    detail2: "Technology: Java, JavaScript, UWA, Matrix Query Language, JAX-RS, Jira-Bitbucket",
+                    detail3: "Responsibility: Full lifecycle: requirements, development, deployment, and support.",
+                    description: "This long-term project involved managing titles and translations within the Enovia PLM system. My responsibilities covered the entire software development lifecycle, from gathering requirements and designing solutions to implementing, deploying, and providing ongoing support for the system."
+                },
+                cloudViewDashboard_nope: {
+                    title: "Cloud View Dashboard Development",
+                    detail1: "Duration: November 2021 - April 2022",
+                    detail2: "Technology: DS Cloud View Framework, Java, JavaScript, Rest Service, Git-Gerrit",
+                    detail3: "Responsibility: Requirements analysis and REST API development.",
+                    description: "My role in the Cloud View Dashboard project involved analyzing requirements for new dashboard functionalities and developing efficient REST APIs to power them. I worked within the DS Cloud View Framework to ensure seamless integration and optimal performance."
+                },
+                enoviaWebserviceClient_nope: {
+                    title: "Enovia Webservice Client",
+                    detail1: "Duration: January 2021 - April 2022",
+                    detail2: "Technology: Spring MVC",
+                    detail3: "Responsibility: Development and later guiding the new development team.",
+                    description: "Initially, I was responsible for developing the Enovia Webservice Client using Spring MVC. Later, my role transitioned to providing technical guidance and mentorship to a new development team, ensuring they could effectively maintain and extend the client."
+                },
+                enoviaRestService_nope: {
+                    title: "Enovia Rest Service (PDM-Enovia Migration)",
+                    detail1: "Duration: November 2021 - April 2022",
+                    detail2: "Technology: Spring Boot, Matrix Query Language",
+                    detail3: "Responsibility: Assisted main developer in feature development and performance optimization.",
+                    description: "During the PDM-Enovia migration, I collaborated closely with the main developer on building REST services. My focus was on developing key features and optimizing existing functionalities to ensure a smooth and performant data migration process."
+                },
+                atonIntegrations_nope: {
+                    title: "Aton Integrations",
+                    detail1: "Duration: January 2022 - April 2022",
+                    detail2: "Technology: Spring Boot",
+                    detail3: "Responsibility: Main Developer — implemented client requirements using Java and Matrix Query Language.",
+                    description: "As the main developer for Aton Integrations, I was responsible for translating client requirements into robust software solutions. I extensively used Java and Matrix Query Language to build the necessary integrations, ensuring all specifications were met efficiently."
+                }
+            },
+            education: {
+                bachelorDegree_nope: {
+                    title: "Bachelor of Science in Computer Science & Engineering",
+                    detail1: "International University Of Business Agriculture and Technology (IUBAT)",
+                    detail2: "Computer Science and Engineering",
+                    detail3: "",
+                    description: "Graduated with honors from IUBAT, specializing in software development and algorithms. My coursework included data structures, object-oriented programming, database management, and web technologies. Participated in several coding competitions and academic projects."
+                },
+                hsc_nope: {
+                    title: "Higher Secondary Certificate (HSC)",
+                    detail1: "Shahid Bulbul Government College",
+                    detail2: "Passing Year: 2014",
+                    detail3: "Result: GPA: 5.00 out of 5.00",
+                    description: "Completed my Higher Secondary Certificate in Science, focusing on Mathematics, Physics, Chemistry, and Biology. Achieved a perfect GPA, demonstrating strong foundational knowledge in STEM subjects."
+                },
+                 ssc_nope: {
+                    title: "Secondary School Certificate (SSC)",
+                    detail1: "Bilsolongi Alokdiar High School",
+                    detail2: "Passing Year: 2011",
+                    detail3: "Result: GPA: 5.00 out of 5.00 (Golden A+)",
+                    description: "Successfully completed my Secondary School Certificate in Science, achieving the highest possible GPA. Developed strong analytical and problem-solving skills during this period."
+                },
+                // New entries for class 1-10
+                classSixToTen_nope: {
+                    title: "Secondary Education (Class VI - X)",
+                    detail1: "Bilsolongi Alokdiar High School",
+                    detail2: "Duration: 2005 – 2011",
+                    detail3: "Notes: Focused on core subjects, participated in science fairs and debate competitions.",
+                    description: "My secondary education at Bilsolongi Alokdiar High School provided a strong academic foundation. I actively participated in extracurricular activities, which helped develop my teamwork and public speaking skills."
+                },
+                classOneToFive: {
+                    title: "Primary Education (Class I - V)",
+                    detail1: "Institution: Bilsolongi Government Primary School",
+                    detail2: "Duration: 2000 – 2005",
+                    detail3: "Notes: Developed foundational literacy and numeracy skills, active in school cultural events.",
+                    description: "My early schooling years laid the groundwork for my academic journey, focusing on essential skills. I enjoyed participating in school cultural activities, fostering creativity and social interaction."
+                }
+            },
+            knowledgeBase: {
+                springFramework: {
+                    title: "Spring Framework Ecosystem",
+                    detail1: "Area: Backend Development, Microservices",
+                    detail2: "Experience: Extensive use in various projects for building robust APIs and services.",
+                    detail3: "", // Can be empty or add more
+                    description: "Proficient in developing scalable and maintainable backend applications using Spring Boot, Spring MVC, Spring Data JPA, and Spring Security. Experienced in designing RESTful APIs and integrating with various services."
+                },
+                kafkaMessaging: {
+                    title: "Apache Kafka & Messaging Systems",
+                    detail1: "Area: Asynchronous Communication, Data Streaming",
+                    detail2: "Experience: Implemented event-driven architectures and real-time data pipelines.",
+                    detail3: "",
+                    description: "Hands-on experience with Apache Kafka for building high-throughput, fault-tolerant messaging systems. Familiar with Kafka Streams and consumer/producer patterns for real-time data processing and analytics."
+                },
+                databases: {
+                    title: "Relational & NoSQL Databases",
+                    detail1: "Area: Data Storage, Query Optimization",
+                    detail2: "Experience: PostgreSQL, Oracle, MongoDB proficiency.",
+                    detail3: "",
+                    description: "Skilled in designing database schemas, writing optimized SQL queries, and managing data with PostgreSQL and Oracle. Also experienced with NoSQL databases like MongoDB for flexible data storage solutions."
+                },
+                cicd: {
+                    title: "CI/CD & DevOps Practices",
+                    detail1: "Area: Automation, Deployment",
+                    detail2: "Experience: Jenkins, Git, Docker, basic Kubernetes understanding.",
+                    detail3: "",
+                    description: "Familiar with Continuous Integration and Continuous Deployment (CI/CD) pipelines, automating builds, tests, and deployments. Proficient with Git for version control and experienced with Docker for containerization, with basic knowledge of Kubernetes orchestration."
+                },
+                frontendBasics: {
+                    title: "Frontend Basics (React, HTML, CSS, JS)",
+                    detail1: "Area: Web Interface Development",
+                    detail2: "Experience: Built user interfaces for web applications, including interactive elements.",
+                    detail3: "",
+                    description: "Possess foundational knowledge in frontend web development, including HTML5 for structure, CSS3 for styling, and JavaScript for interactivity. Have experience working with ReactJS for building dynamic and responsive user interfaces."
+                }
+            },
+            // New Achievements Section Data
+            achievements: {
+                codeathonWinner: {
+                    title: "Inter-University Programming Contest",
+                    detail1: "Event: National Collegiate Programming Contest 2017",
+                    detail2: "Award: Top 10 Finisher",
+                    detail3: "Details: Solved complex algorithmic problems under pressure, demonstrating strong problem-solving and coding abilities.",
+                    description: "Achieved a top 10 ranking in a highly competitive national programming contest, showcasing my proficiency in algorithms, data structures, and rapid problem-solving. This experience honed my ability to work efficiently under tight deadlines."
+                },
+                deanList: {
+                    title: "Dean's List Honoree",
+                    detail1: "Recognition: Academic Excellence",
+                    detail2: "Details: Consistently maintained a high GPA, reflecting dedication and strong comprehension of challenging coursework.",
+                    detail3: "",
+                    description: "Consistently featured on the Dean's List for exceptional academic performance during my Bachelor's degree. This recognition highlights my commitment to academic rigor and my ability to excel in demanding computer science curriculum."
+                },
+                certifications: {
+                    title: "Professional Certifications",
+                    detail1: "Certifications: AWS Certified Developer - Associate, Oracle Certified Professional, Java SE 8 Programmer",
+                    detail2: "Details: Validated expertise in cloud development and enterprise-level Java programming standards.",
+                    detail3: "",
+                    description: "Obtained industry-recognized certifications, including AWS Certified Developer - Associate and Oracle Certified Professional, Java SE 8 Programmer. These demonstrate my commitment to continuous learning and mastery of critical industry technologies and best practices."
+                }
+            },
+            personal: {
+                game_dev_hustle_1: {
+    title: "Battle of Warriors",
+    detail1: "MOBA Game",
+    detail2: "Unreal Engine, C++, Blueprint, GAS (Gameplay Ability System)",
+    detail3: "",
+    description: "This project marks a significant milestone in my journey as a game developer. After investing time to understand the Unreal Engine ecosystem, I’m now building an online multiplayer battle arena game based on the Lyra Gameplay Framework. The game leverages C++, Blueprints, and the powerful Gameplay Ability System (GAS) to deliver competitive and dynamic combat experiences. Curtently Work In Progress."
+}
+,
+               hobbies: {
+                    title: "Hobbies & Interests",
+                    detail1: "Motorcycling Enthusiast",
+                    detail2: "Passionate about motorcycle rides, particularly through new destination.",
+                    detail3: "",
+                    description: "Outside of my professional work, I enjoy exploring the diverse countryside of Bangladesh on two wheels. These rides not only refresh my mind but also inspire creative thinking and a strong appreciation for nature and culture."
+                },
+                volunteering: {
+                    title: "Volunteering",
+                    detail1: "Activities: Local community cleanups, mentorship programs",
+                    detail2: "Impact: Contributing to community well-being and helping others grow.",
+                    detail3: "",
+                    description: "Committed to giving back to the community through participation in local clean-up drives and mentoring aspiring developers. I believe in fostering a supportive environment and contributing positively to society."
+                },
+                travel: {
+                    title: "Travel Experiences",
+                    detail1: "Passion: Exploring new cultures and places",
+                    detail2: "Recent Trips: Visited historical sites in Bangladesh, planning international travel.",
+                    detail3: "",
+                    description: "My passion for travel stems from a desire to immerse myself in new cultures, experience different ways of life, and broaden my perspective. I've explored many historical and natural wonders within Bangladesh and am always planning my next adventure abroad."
+                }
+            }
+        };
 
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Start Date</th>
-          <th>Tag</th>
-          <th>Title</th>
-          <th>Time Spent</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>102</td>
-          <td>July 1, 2022</td>
-          <td>Elastic Search</td>
-          <td>Common ELK stack(Windows, Linus) </td>
-          <td>240 Hours </td>
-        </tr>
-        <tr>
-          <td>101</td>
-          <td>March 12, 2022</td>
-          <td>Git Hub</td>
-          <td>Hosting Personal Single Page</td>
-          <td>1 Hour 30 Minutes</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+        const itemModal = document.getElementById('itemModal');
+        const closeModalButton = document.getElementById('closeModal');
+        const navbar = document.querySelector('.navbar');
+        const contentSections = document.querySelectorAll('.content-section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        // Modal content elements
+        const modalItemTitle = document.getElementById('modalItemTitle');
+        const modalItemDetail1 = document.getElementById('modalItemDetail1');
+        const modalItemDetail2 = document.getElementById('modalItemDetail2');
+        const modalItemDetail3 = document.getElementById('modalItemDetail3');
+        const modalItemDescription = document.getElementById('modalItemDescription');
+
+        // Function to open the modal
+        function openModal(sectionType, itemId) {
+            const item = portfolioData[sectionType][itemId];
+            if (item) {
+                modalItemTitle.textContent = item.title;
+                modalItemDetail1.innerHTML = `<span class="label"></span> ${item.detail1}`;
+                modalItemDetail2.innerHTML = `<span class="label"></span> ${item.detail2}`;
+                modalItemDetail3.innerHTML = `<span class="label"></span> ${item.detail3}`;
+                modalItemDescription.textContent = item.description;
+
+                // Dynamically adjust labels based on section type
+                if (sectionType === 'projects') {
+                    modalItemDetail1.querySelector('.label').textContent = 'Duration:';
+                    modalItemDetail2.querySelector('.label').textContent = 'Technology:';
+                    modalItemDetail3.querySelector('.label').textContent = 'Responsibility:';
+                } else if (sectionType === 'education') {
+                    // Specific handling for education details
+                    if (itemId === 'bachelorDegree') {
+                        modalItemDetail1.querySelector('.label').textContent = 'Institution:';
+                        modalItemDetail2.querySelector('.label').textContent = 'Department:';
+                        modalItemDetail3.querySelector('.label').textContent = ''; // Detail3 already contains "Duration | Result"
+                    } else if (itemId === 'hsc' || itemId === 'ssc') {
+                        modalItemDetail1.querySelector('.label').textContent = 'Institution:';
+                        modalItemDetail2.querySelector('.label').textContent = 'Passing Year:';
+                        modalItemDetail3.querySelector('.label').textContent = 'Result:';
+                    } else if (itemId === 'classSixToTen' || itemId === 'classOneToFive') {
+                         modalItemDetail1.querySelector('.label').textContent = 'Institution:';
+                         modalItemDetail2.querySelector('.label').textContent = 'Duration:';
+                         modalItemDetail3.querySelector('.label').textContent = 'Notes:';
+                    }
+                } else if (sectionType === 'knowledgeBase') {
+                     modalItemDetail1.querySelector('.label').textContent = 'Area:';
+                     modalItemDetail2.querySelector('.label').textContent = 'Experience:';
+                     modalItemDetail3.querySelector('.label').textContent = '';
+                } else if (sectionType === 'achievements') { // New Achievements section label logic
+                    if (itemId === 'codeathonWinner') {
+                        modalItemDetail1.querySelector('.label').textContent = 'Event:';
+                        modalItemDetail2.querySelector('.label').textContent = 'Award:';
+                        modalItemDetail3.querySelector('.label').textContent = 'Details:';
+                    } else if (itemId === 'deanList') {
+                        modalItemDetail1.querySelector('.label').textContent = 'Recognition:';
+                        modalItemDetail2.querySelector('.label').textContent = 'Details:';
+                        modalItemDetail3.querySelector('.label').textContent = '';
+                    } else if (itemId === 'certifications') {
+                        modalItemDetail1.querySelector('.label').textContent = 'Certifications:';
+                        modalItemDetail2.querySelector('.label').textContent = 'Details:';
+                        modalItemDetail3.querySelector('.label').textContent = '';
+                    }
+                }
+                else if (sectionType === 'personal') {
+                     modalItemDetail1.querySelector('.label').textContent = 'Interests:';
+                     modalItemDetail2.querySelector('.label').textContent = 'Details:';
+                     modalItemDetail3.querySelector('.label').textContent = '';
+                }
+
+
+                itemModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            itemModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Function to switch content sections
+        function showSection(sectionId) {
+            // Deactivate all sections
+            contentSections.forEach(section => {
+                section.classList.remove('active');
+            });
+            // Activate the selected section
+            document.getElementById(sectionId).classList.add('active');
+
+            // Update active state of navigation links
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.section === sectionId.replace('-section', '')) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Event listener for navigation clicks
+        navbar.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default link behavior
+            const targetLink = event.target.closest('.nav-link');
+            if (targetLink) {
+                const sectionToShow = targetLink.dataset.section + '-section';
+                showSection(sectionToShow);
+            }
+        });
+
+        // Event listener for opening the modal from any item card
+        document.body.addEventListener('click', function(event) {
+            const itemCard = event.target.closest('.item-card');
+            if (itemCard) {
+                const sectionType = itemCard.dataset.sectionType;
+                const itemId = itemCard.dataset.itemId;
+                if (sectionType && itemId) {
+                    openModal(sectionType, itemId);
+                }
+            }
+        });
+
+        // Event listener for closing the modal via the 'X' button
+        closeModalButton.addEventListener('click', closeModal);
+
+        // Event listener for closing the modal by clicking outside the content
+        itemModal.addEventListener('click', function(event) {
+            if (event.target === itemModal) {
+                closeModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && itemModal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        // Initialize: Show My Projects section by default on load
+        document.addEventListener('DOMContentLoaded', () => {
+            showSection('projects-section');
+        });
+    </script>
 
 </body>
-
 </html>
